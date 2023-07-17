@@ -8,15 +8,12 @@
     <style>
       body {
         margin: 0;
+        padding: 0;
         overflow: hidden;
         font-family: Arial, sans-serif;
       }
       
       #options {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -42,44 +39,61 @@
       #options button:hover {
         background-color: #45a049;
       }
+
+      #arContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #arScene {
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
-    <a-scene embedded arjs>
-      <a-assets>
-        <a-asset-item id="hiro-mixin-1" src="planet_earth.glb"></a-asset-item>
-        <a-asset-item id="hiro-mixin-2" src="b.glb"></a-asset-item>
-        <a-asset-item id="hiro-mixin-3" src="ImageToStl.com_piernas.glb"></a-asset-item>
-        <a-asset-item id="kanji-mixin-1" src="marte.glb"></a-asset-item>
-        <a-asset-item id="kanji-mixin-2" src="logoUleam.glb"></a-asset-item>
-        <a-asset-item id="kanji-mixin-3" src="luna_by_miguel_antonio_hz_lechmk (1).glb"></a-asset-item>
-      </a-assets>
+    <div id="arContainer">
+      <div id="arScene">
+        <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
+          <a-assets>
+            <a-asset-item id="hiro-mixin-1" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+            <a-asset-item id="hiro-mixin-2" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+            <a-asset-item id="hiro-mixin-3" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+            <a-asset-item id="kanji-mixin-1" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+            <a-asset-item id="kanji-mixin-2" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+            <a-asset-item id="kanji-mixin-3" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
+          </a-assets>
 
-      <a-marker preset="hiro">
-        <a-entity
-          crossOrigin="anonymous"
-          position="0 0 0"
-          scale="1.5 1.5 1.5"
-          mixin="hiro-mixin-1"
-          id="hiro-model"
-          rotation="0 0 0"
-          draggable
-        ></a-entity>
-      </a-marker>
-      
-      <a-marker preset="kanji">
-        <a-entity
-          position="0 0 0"
-          scale="1 1 1"
-          mixin="kanji-mixin-1"
-          id="kanji-model"
-          rotation="0 0 0"
-          draggable
-        ></a-entity>
-      </a-marker>
+          <a-marker preset="hiro">
+            <a-entity
+              crossOrigin="anonymous"
+              position="0 0 0"
+              scale="1.5 1.5 1.5"
+              mixin="hiro-mixin-1"
+              id="hiro-model"
+              rotation="0 0 0"
+              draggable
+            ></a-entity>
+          </a-marker>
+          
+          <a-marker preset="kanji">
+            <a-entity
+              position="0 0 0"
+              scale="1 1 1"
+              mixin="kanji-mixin-1"
+              id="kanji-model"
+              rotation="0 0 0"
+              draggable
+            ></a-entity>
+          </a-marker>
 
-      <a-entity camera></a-entity>
-    </a-scene>
+          <a-entity camera></a-entity>
+        </a-scene>
+      </div>
+    </div>
 
     <div id="options">
       <h2>Seleccione una opción para Hiro:</h2>
@@ -149,4 +163,3 @@
     </script>
   </body>
 </html>
-
