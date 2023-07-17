@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AR Interfaz</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+      
+      #options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      
+      #options h2 {
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+      }
+      
+      #options button {
+        margin: 0.5em;
+        padding: 0.5em 1em;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #options button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene embedded arjs>
+      <a-assets>
+        <a-asset-item id="hiro-mixin-1" src="pv1.glb"></a-asset-item>
+        <a-asset-item id="hiro-mixin-2" src="b.glb"></a-asset-item>
+        <a-asset-item id="hiro-mixin-3" src="ImageToStl.com_piernas.glb"></a-asset-item>
+        <a-asset-item id="kanji-mixin-1" src="cabeza.glb"></a-asset-item>
+        <a-asset-item id="kanji-mixin-2" src="logoUleam.glb"></a-asset-item>
+        <a-asset-item id="kanji-mixin-3" src="kanji3.glb"></a-asset-item>
+      </a-assets>
+
+      <a-marker preset="hiro">
+        <a-entity
+          crossOrigin="anonymous"
+          position="0 0 0"
+          scale="1.5 1.5 1.5"
+          mixin="hiro-mixin-1"
+          id="hiro-model"
+          rotation="0 0 0"
+          draggable
+        ></a-entity>
+      </a-marker>
+      
+      <a-marker preset="kanji">
+        <a-entity
+          position="0 0 0"
+          scale="1 1 1"
+          mixin="kanji-mixin-1"
+          id="kanji-model"
+          rotation="0 0 0"
+          draggable
+        ></a-entity>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <div id="options">
+      <h2>Seleccione una opción para Hiro:</h2>
+      <button onclick="changeModel('#hiro-model', '#hiro-mixin-1')">Opción 1</button>
+      <button onclick="changeModel('#hiro-model', '#hiro-mixin-2')">Opción 2</button>
+      <button onclick="changeModel('#hiro-model', '#hiro-mixin-3')">Opción 3</button>
+      
+      <h2>Seleccione una opción para Kanji:</h2>
+      <button onclick="changeModel('#kanji-model', '#kanji-mixin-1')">Opción 1</button>
+      <button onclick="changeModel('#kanji-model', '#kanji-mixin-2')">Opción 2</button>
+      <button onclick="changeModel('#kanji-model', '#kanji-mixin-3')">Opción 3</button>
+    </div>
+
+    <script>
+      function changeModel(marker, mixinId) {
+        var model = document.querySelector(marker);
+        var mixin = document.querySelector(mixinId);
+        model.setAttribute("mixin", mixin.getAttribute("id"));
+        
+        // Ocultar opciones después de seleccionar
+        document.getElementById("options").style.display = "none";
+      }
+      
+      AFRAME.registerComponent('draggable', {
+        init: function () {
+          var el = this.el;
+          var isDragging = false;
+          var previousPosition = { x: 0, y: 0 };
+          
+          el.addEventListener('mousedown', function (event) {
+            isDragging = true;
+            previousPosition.x = event.clientX;
+            previousPosition.y = event.clientY;
+          });
+          
+          el.addEventListener('mouseup', function () {
+            isDragging = false;
+          });
+          
+          el.addEventListener('mouseleave', function () {
+            isDragging = false;
+          });
+          
+          el.addEventListener('mousemove', function (event) {
+            if (!isDragging) return;
+            
+            var currentPosition = { x: event.clientX, y: event.clientY };
+            var delta = {
+              x: currentPosition.x - previousPosition.x,
+              y: currentPosition.y - previousPosition.y
+            };
+            
+            var rotation = el.getAttribute('rotation');
+            rotation.y += delta.x * 0.5;
+            rotation.x += delta.y * 0.5;
+            el.setAttribute('rotation', rotation);
+            
+            previousPosition = currentPosition;
+          });
+        }
+      });
+
+      // Preguntar opciones al cargar la página
+      window.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("options").style.display = "block";
+      });
+    </script>
+  </body>
+</html>
