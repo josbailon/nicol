@@ -1,99 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>AR Interfaz</title>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-      }
-      
-      #options {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
-      
-      #options h2 {
-        margin-top: 1em;
-        margin-bottom: 0.5em;
-      }
-      
-      #options button {
-        margin: 0.5em;
-        padding: 0.5em 1em;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      #options button:hover {
-        background-color: #45a049;
-      }
-
-      #arContainer {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      #arScene {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    
+    #options {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    #options h2 {
+      margin-top: 1em;
+    }
+    
+    #options button {
+      margin: 0.5em;
+      padding: 0.5em 1em;
+    }
+  </style>
   <body>
-    <div id="arContainer">
-      <div id="arScene">
-        <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
-          <a-assets>
-            <a-asset-item id="hiro-mixin-1" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-            <a-asset-item id="hiro-mixin-2" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-            <a-asset-item id="hiro-mixin-3" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-            <a-asset-item id="kanji-mixin-1" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-            <a-asset-item id="kanji-mixin-2" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-            <a-asset-item id="kanji-mixin-3" src="https://cdn.aframe.io/examples/boilerplate/hexagon/hexagon.gltf"></a-asset-item>
-          </a-assets>
+    <a-scene embedded arjs>
+      <a-mixin id="hiro-mixin-1" gltf-model="planet_earth.glb"></a-mixin>
+      <a-mixin id="hiro-mixin-2" gltf-model="marte.glb"></a-mixin>
+      <a-mixin id="hiro-mixin-3" gltf-model="logoUleam.glb"></a-mixin>
+      
+      <a-mixin id="kanji-mixin-1" gltf-model="cabeza.glb"></a-mixin>
+      <a-mixin id="kanji-mixin-2" gltf-model="logoUleam.glb"></a-mixin>
+      <a-mixin id="kanji-mixin-3" gltf-model="kanji3.glb"></a-mixin>
+      
+      <a-marker preset="hiro">
+        <a-entity
+          crossOrigin="anonymous"
+          position="0 0 0"
+          scale="1.5 1.5 1.5"
+          mixin="hiro-mixin-1"
+          id="hiro-model"
+          rotation="0 0 0"
+          draggable
+        ></a-entity>
+      </a-marker>
+      
+      <a-marker preset="kanji">
+        <a-entity
+          position="0 0 0"
+          scale="1 1 1"
+          mixin="kanji-mixin-1"
+          id="kanji-model"
+          rotation="0 0 0"
+          draggable
+        ></a-entity>
+      </a-marker>
 
-          <a-marker preset="hiro">
-            <a-entity
-              crossOrigin="anonymous"
-              position="0 0 0"
-              scale="1.5 1.5 1.5"
-              mixin="hiro-mixin-1"
-              id="hiro-model"
-              rotation="0 0 0"
-              draggable
-            ></a-entity>
-          </a-marker>
-          
-          <a-marker preset="kanji">
-            <a-entity
-              position="0 0 0"
-              scale="1 1 1"
-              mixin="kanji-mixin-1"
-              id="kanji-model"
-              rotation="0 0 0"
-              draggable
-            ></a-entity>
-          </a-marker>
-
-          <a-entity camera></a-entity>
-        </a-scene>
-      </div>
-    </div>
+      <a-entity camera></a-entity>
+    </a-scene>
 
     <div id="options">
       <h2>Seleccione una opción para Hiro:</h2>
